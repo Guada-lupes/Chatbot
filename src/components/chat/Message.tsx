@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import FormattedMessage from './FormattedMessage';
 
 interface MessageProps {
   message?: string;
@@ -88,11 +89,9 @@ const Message: React.FC<MessageProps> = ({ message, isUser, timestamp, isTyping 
             ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30' 
             : 'bg-white shadow-purple-200/50'
         }`}>
-          <p className={`leading-relaxed ${
-            isDark ? 'text-gray-100' : 'text-gray-800'
-          }`}>
-            {message}
-          </p>
+          <div className={isDark ? 'text-gray-100' : 'text-gray-800'}>
+            <FormattedMessage content={message || ''} isDark={isDark} />
+          </div>
         </div>
         {timestamp && (
           <p className={`text-xs mt-2 ml-2 ${

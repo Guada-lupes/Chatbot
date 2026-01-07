@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import ChatHeader from '../chat/ChatHeader';
 import MessageList, { MessageType } from '../chat/MessageList';
 import ChatInput from '../chat/ChatInput';
+import { AssistantService } from '../../services/assistantService';
 
 const ChatContainer: React.FC = () => {
   const { isDark } = useTheme();
   const [messages, setMessages] = useState<MessageType[]>([
     {
-      text: '¡Hola! 👋 Soy tu asistente virtual potenciado con IA. Estoy aquí para ayudarte con cualquier consulta que tengas. ¿En qué puedo asistirte hoy?',
+      text: '¡Hola! 👋 Soy tu asistente virtual de CloudNote Pro. Estoy aquí para ayudarte con cualquier duda sobre notas, sincronización, inicio de sesión o cualquier problema con la aplicación. ¿En qué puedo ayudarte?',
       isUser: false,
-      timestamp: '10:30 AM'
+      timestamp: new Date().toLocaleTimeString('es-ES', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      })
     }
   ]);
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const handleSendMessage = (messageText: string): void => {
-    // Agregar mensaje del usuario
+  // Referencia al servicio del asistente
+  const assistantServiceRef = useRef<AssistantService | null>(null);
+
+  // Inicializar el servicio del asistente
+  useEffect(() => {
+    assistantServiceRef.current = new AssistantService();
+  }, []);
+
+  const handleSendMessage = async (messageText: string): Promise<void> => {
+    // Agregar mensaje del usuario inmediatamente
     const userMessage: MessageType = {
       text: messageText,
       isUser: true,
@@ -29,10 +41,30 @@ const ChatContainer: React.FC = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
 
-    // Simular respuesta del asistente (aquí conectarás tu backend más adelante)
-    setTimeout(() => {
-      const assistantMessage: MessageType = {
-        text: 'Esta es una respuesta de ejemplo. Aquí conectarás tu lógica con LangChain y Groq.',
+
+    try {
+      // Llamar al servicio del asistente
+      const response = await assistantServiceRef.current?.handleUserInput(messageText);
+
+      if (response) {
+        const assistantMessage: MessageType = {
+          text: response.text,
+          isUser: false,
+          timestamp: new Date().toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          })
+        };
+        
+        setMessages(prev => [...prev, assistantMessage]);
+      }
+
+    } catch (error) {
+      console.error('Error al obtener respuesta:', error);
+      
+      // Mensaje de error para el usuario
+      const errorMessage: MessageType = {
+        text: 'Lo siento, ha ocurrido un error. Por favor, verifica tu conexión e intenta de nuevo.',
         isUser: false,
         timestamp: new Date().toLocaleTimeString('es-ES', { 
           hour: '2-digit', 
@@ -40,11 +72,12 @@ const ChatContainer: React.FC = () => {
         })
       };
       
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 2000);
+    }
   };
-
+  
   return (
     <div className={`min-h-screen transition-all duration-500 ${
       isDark 

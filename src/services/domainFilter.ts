@@ -2,6 +2,7 @@
 
 import { DomainClassification } from '../types/assistant.types';
 import { IN_DOMAIN_KEYWORDS } from '../config/domainKeywords';
+import { classifyWithLLM } from './llmService';
 
 /**
  * Normaliza el texto a minúsculas y quita espacios
@@ -33,9 +34,7 @@ export function classifyDomainByRules(userInput: string): DomainClassification {
  * Clasificador basado en LLM (lo implementaremos después)
  */
 export async function classifyDomainByLLM(userInput: string): Promise<DomainClassification> {
-  // Por ahora retornamos OUT_OF_DOMAIN
-  // Lo implementaremos en el siguiente paso con Groq
-  return DomainClassification.OUT_OF_DOMAIN;
+  return await classifyWithLLM(userInput);
 }
 
 /**
