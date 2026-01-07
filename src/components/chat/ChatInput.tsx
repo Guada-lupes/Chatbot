@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent, KeyboardEvent, ChangeEvent } from 'react';
 import { Send, Zap } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
-export default function ChatInput({ onSendMessage, disabled }) {
-  const { isDark } = useTheme();
-  const [inputValue, setInputValue] = useState('');
+interface ChatInputProps {
+  onSendMessage: (message: string) => void;
+  disabled?: boolean;
+}
 
-  const handleSubmit = (e) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }) => {
+  const { isDark } = useTheme();
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (inputValue.trim() && !disabled) {
@@ -15,11 +20,15 @@ export default function ChatInput({ onSendMessage, disabled }) {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleSubmit(e as any);
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
@@ -38,7 +47,7 @@ export default function ChatInput({ onSendMessage, disabled }) {
             <input
               type="text"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleChange}
               onKeyPress={handleKeyPress}
               disabled={disabled}
               placeholder="Escribe tu mensaje aquí..."
@@ -74,4 +83,6 @@ export default function ChatInput({ onSendMessage, disabled }) {
       </div>
     </div>
   );
-}
+};
+
+export default ChatInput;

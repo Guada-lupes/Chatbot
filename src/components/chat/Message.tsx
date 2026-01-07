@@ -2,7 +2,14 @@ import React from 'react';
 import { Sparkles } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
-export default function Message({ message, isUser, timestamp, isTyping }) {
+interface MessageProps {
+  message?: string;
+  isUser?: boolean;
+  timestamp?: string;
+  isTyping?: boolean;
+}
+
+const Message: React.FC<MessageProps> = ({ message, isUser, timestamp, isTyping }) => {
   const { isDark } = useTheme();
 
   if (isTyping) {
@@ -97,4 +104,6 @@ export default function Message({ message, isUser, timestamp, isTyping }) {
       </div>
     </div>
   );
-}
+};
+
+export default Message;

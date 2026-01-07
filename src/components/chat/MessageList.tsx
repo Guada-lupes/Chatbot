@@ -2,9 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import Message from './Message';
 
-export default function MessageList({ messages, isTyping }) {
+export interface MessageType {
+  text: string;
+  isUser: boolean;
+  timestamp?: string;
+}
+
+interface MessageListProps {
+  messages: MessageType[];
+  isTyping: boolean;
+}
+
+const MessageList: React.FC<MessageListProps> = ({ messages, isTyping }) => {
   const { isDark } = useTheme();
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -54,4 +65,6 @@ export default function MessageList({ messages, isTyping }) {
       </div>
     </main>
   );
-}
+};
+
+export default MessageList;

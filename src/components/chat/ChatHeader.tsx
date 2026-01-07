@@ -2,7 +2,7 @@ import React from 'react';
 import { Sparkles, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
-export default function ChatHeader() {
+const ChatHeader: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -53,4 +53,6 @@ export default function ChatHeader() {
       </div>
     </header>
   );
-}
+};
+
+export default ChatHeader;

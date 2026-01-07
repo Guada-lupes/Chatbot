@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import ChatHeader from '../chat/ChatHeader';
-import MessageList from '../chat/MessageList';
+import MessageList, { MessageType } from '../chat/MessageList';
 import ChatInput from '../chat/ChatInput';
 
-export default function ChatContainer() {
+const ChatContainer: React.FC = () => {
   const { isDark } = useTheme();
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<MessageType[]>([
     {
       text: '¡Hola! 👋 Soy tu asistente virtual potenciado con IA. Estoy aquí para ayudarte con cualquier consulta que tengas. ¿En qué puedo asistirte hoy?',
       isUser: false,
       timestamp: '10:30 AM'
     }
   ]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const handleSendMessage = (messageText) => {
+  const handleSendMessage = (messageText: string): void => {
     // Agregar mensaje del usuario
-    const userMessage = {
+    const userMessage: MessageType = {
       text: messageText,
       isUser: true,
       timestamp: new Date().toLocaleTimeString('es-ES', { 
@@ -31,7 +31,7 @@ export default function ChatContainer() {
 
     // Simular respuesta del asistente (aquí conectarás tu backend más adelante)
     setTimeout(() => {
-      const assistantMessage = {
+      const assistantMessage: MessageType = {
         text: 'Esta es una respuesta de ejemplo. Aquí conectarás tu lógica con LangChain y Groq.',
         isUser: false,
         timestamp: new Date().toLocaleTimeString('es-ES', { 
@@ -69,4 +69,6 @@ export default function ChatContainer() {
       </div>
     </div>
   );
-}
+};
+
+export default ChatContainer;
