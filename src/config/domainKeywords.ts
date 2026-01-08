@@ -12,6 +12,17 @@ export const IN_DOMAIN_KEYWORDS = [
   "compartir",
   "error",
   "problema",
+    'hola',
+  'buenos días',
+  'buenas tardes',
+  'buenas noches',
+  'hey',
+  'saludos',
+  'ayuda',
+  'ayudar',
+  'gracias',
+  'ok',
+  'vale'
 ];
 
 export const SYSTEM_PROMPT = `

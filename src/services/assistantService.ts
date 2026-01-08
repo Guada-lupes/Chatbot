@@ -1,4 +1,3 @@
-// src/services/assistantService.ts
 
 import { ConversationMemory } from './conversationMemory';
 import { classifyDomainHybrid } from './domainFilter';
@@ -13,8 +12,8 @@ export class AssistantService {
     this.memory = new ConversationMemory();
   }
 
-  /**
-   * Maneja el input del usuario y retorna la respuesta
+  /*
+    Maneja el input del usuario y retorna la respuesta
    */
   async handleUserInput(userInput: string): Promise<AssistantResponse> {
     try {
@@ -53,23 +52,23 @@ export class AssistantService {
     }
   }
 
-  /**
-   * Genera la respuesta del asistente
+  /*
+    Genera la respuesta del asistente
    */
   private async generateResponse(userInput: string): Promise<string> {
     const memoryMessages = this.memory.getMessages();
     return await generateResponseWithMemory(userInput, memoryMessages);
   }
 
-  /**
-   * Limpia la memoria de la conversación
+  /*
+    Limpia la memoria de la conversación
    */
   clearMemory(): void {
     this.memory.clear();
   }
 
-  /**
-   * Obtiene el historial de mensajes
+  /*
+    Obtiene el historial de mensajes
    */
   getConversationHistory() {
     return this.memory.getMessages();

@@ -41,7 +41,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping }) => {
       <div className="h-[calc(100vh-340px)] overflow-y-auto px-8 py-8">
         <div className="space-y-6 max-w-4xl mx-auto">
           
-          {/* Separador de fecha - Ahora dinámico */}
+          {/* Separador de fecha */}
           <div className="flex justify-center mb-8">
             <div className={`px-6 py-3 rounded-full text-sm font-medium ${
               isDark 

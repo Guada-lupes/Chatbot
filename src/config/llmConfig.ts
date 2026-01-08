@@ -1,4 +1,3 @@
-// src/config/llmConfig.ts
 
 export const LLM_CONFIG = {
   apiKey: import.meta.env.VITE_GROQ_API_KEY || '',

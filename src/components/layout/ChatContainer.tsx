@@ -28,7 +28,7 @@ const ChatContainer: React.FC = () => {
   }, []);
 
   const handleSendMessage = async (messageText: string): Promise<void> => {
-    // Agregar mensaje del usuario inmediatamente
+    // Agrega mensaje del usuario inmediatamente
     const userMessage: MessageType = {
       text: messageText,
       isUser: true,

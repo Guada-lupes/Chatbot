@@ -6,7 +6,7 @@ interface FormattedMessageProps {
 }
 
 const FormattedMessage: React.FC<FormattedMessageProps> = ({ content, isDark }) => {
-  // Dividir el contenido en líneas
+  // Divide el contenido en líneas
   const lines = content.split('\n');
 
   return (
@@ -17,13 +17,13 @@ const FormattedMessage: React.FC<FormattedMessageProps> = ({ content, isDark }) 
           return <div key={index} className="h-2" />;
         }
 
-        // Detectar listas con guiones o números
+        // Detecta listas con guiones o números
         const isListItem = /^[\-\*\•]\s/.test(line) || /^\d+\.\s/.test(line);
         
-        // Detectar encabezados (líneas que terminan en :)
+        // Detecta encabezados (líneas que terminan en :)
         const isHeading = line.trim().endsWith(':') && line.length < 80;
 
-        // Detectar texto en negrita (entre **)
+        // Detecta texto en negrita (entre **)
         const hasBold = line.includes('**');
 
         if (isHeading) {

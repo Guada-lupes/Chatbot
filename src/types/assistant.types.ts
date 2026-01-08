@@ -1,4 +1,3 @@
-// src/types/assistant.types.ts
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';

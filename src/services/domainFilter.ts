@@ -1,18 +1,17 @@
-// src/services/domainFilter.ts
 
 import { DomainClassification } from '../types/assistant.types';
 import { IN_DOMAIN_KEYWORDS } from '../config/domainKeywords';
 import { classifyWithLLM } from './llmService';
 
-/**
- * Normaliza el texto a minúsculas y quita espacios
+/*
+  Normaliza el texto a minúsculas y quita espacios
  */
 function normalizeText(text: string): string {
   return text.toLowerCase().trim();
 }
 
-/**
- * Clasificador basado en reglas (palabras clave)
+/*
+  Clasificador basado en reglas (palabras clave)
  */
 export function classifyDomainByRules(userInput: string): DomainClassification {
   if (!userInput || typeof userInput !== 'string') {
@@ -30,15 +29,15 @@ export function classifyDomainByRules(userInput: string): DomainClassification {
   return DomainClassification.OUT_OF_DOMAIN;
 }
 
-/**
- * Clasificador basado en LLM (lo implementaremos después)
+/*
+  Clasificador basado en LLM 
  */
 export async function classifyDomainByLLM(userInput: string): Promise<DomainClassification> {
   return await classifyWithLLM(userInput);
 }
 
-/**
- * Clasificador híbrido: primero reglas, luego LLM si es necesario
+/*
+  Clasificador híbrido: primero reglas, luego LLM si es necesario
  */
 export async function classifyDomainHybrid(userInput: string): Promise<DomainClassification> {
   try {
